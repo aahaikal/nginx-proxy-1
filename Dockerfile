@@ -18,10 +18,15 @@ ADD proxy_params /etc/nginx/proxy_params
 RUN mkdir /etc/nginx/ssl
 WORKDIR /etc/nginx/ssl
 
-ADD server.key 
-RUN openssl req -new -batch -key server.key -out server.csr
-RUN openssl x509 -req -days 10000 -in server.csr -signkey server.key -out server.crt
-ADD dhparam.pem
+ADD server.key /etc/nginx/ssl/server.key 
+ADD server.pem /etc/nginx/ssl/server.pem
+RUN openssl dhparam -out dhparam.pem 4096
+
+
+
+
+
+
 
 RUN mkdir -p /etc/nginx/sites-enabled
 
